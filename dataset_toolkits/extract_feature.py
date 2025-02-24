@@ -140,7 +140,7 @@ if __name__ == '__main__':
                 save_path = os.path.join(opt.output_dir, 'features', feature_name, f'{sha256}.npz')
                 np.savez_compressed(save_path, **pack)
                 records.append({'sha256': sha256, f'feature_{feature_name}' : True})
-                
+            
             for _ in tqdm(range(len(sha256s)), desc="Extracting features"):
                 sha256, data, positions = load_queue.get()
                 positions = torch.from_numpy(positions).float().cuda()

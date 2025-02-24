@@ -81,6 +81,7 @@ if __name__ == '__main__':
 
     # process objects
     func = partial(_voxelize, output_dir=opt.output_dir)
+    # breakpoint()
     voxelized = dataset_utils.foreach_instance(metadata, opt.output_dir, func, max_workers=opt.max_workers, desc='Voxelizing')
     voxelized = pd.concat([voxelized, pd.DataFrame.from_records(records)])
     voxelized.to_csv(os.path.join(opt.output_dir, f'voxelized_{opt.rank}.csv'), index=False)

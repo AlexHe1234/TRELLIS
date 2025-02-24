@@ -8,13 +8,17 @@ import pandas as pd
 from easydict import EasyDict as edict
 from functools import partial
 from subprocess import DEVNULL, call
+import subprocess
 import numpy as np
 from utils import sphere_hammersley_sequence
 
 
-BLENDER_LINK = 'https://download.blender.org/release/Blender3.0/blender-3.0.1-linux-x64.tar.xz'
-BLENDER_INSTALLATION_PATH = '/tmp'
-BLENDER_PATH = f'{BLENDER_INSTALLATION_PATH}/blender-3.0.1-linux-x64/blender'
+# BLENDER_LINK = 'https://download.blender.org/release/Blender3.0/blender-3.0.1-linux-x64.tar.xz'
+# BLENDER_INSTALLATION_PATH = '/tmp'
+# BLENDER_PATH = f'{BLENDER_INSTALLATION_PATH}/blender-3.0.1-linux-x64/blender'
+
+BLENDER_PATH = '/viscam/u/alexhe/projects/generic_rigging/Dino3D/blender-4.2.0-linux-x64/blender'
+
 
 def _install_blender():
     if not os.path.exists(BLENDER_PATH):
@@ -80,8 +84,8 @@ if __name__ == '__main__':
     os.makedirs(os.path.join(opt.output_dir, 'renders'), exist_ok=True)
     
     # install blender
-    print('Checking blender...', flush=True)
-    _install_blender()
+    # print('Checking blender...', flush=True)
+    # _install_blender()
 
     # get file list
     if not os.path.exists(os.path.join(opt.output_dir, 'metadata.csv')):
@@ -91,8 +95,8 @@ if __name__ == '__main__':
         metadata = metadata[metadata['local_path'].notna()]
         if opt.filter_low_aesthetic_score is not None:
             metadata = metadata[metadata['aesthetic_score'] >= opt.filter_low_aesthetic_score]
-        if 'rendered' in metadata.columns:
-            metadata = metadata[metadata['rendered'] == False]
+        # if 'rendered' in metadata.columns:
+            # metadata = metadata[metadata['rendered'] == False]
     else:
         if os.path.exists(opt.instances):
             with open(opt.instances, 'r') as f:

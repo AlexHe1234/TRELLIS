@@ -154,6 +154,7 @@ class SLatMeshDecoder(SparseTransformerBase):
         """
         ret = []
         for i in range(x.shape[0]):
+            # breakpoint()
             mesh = self.mesh_extractor(x[i], training=self.training)
             ret.append(mesh)
         return ret

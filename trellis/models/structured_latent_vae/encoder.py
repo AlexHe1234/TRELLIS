@@ -56,7 +56,7 @@ class SLatEncoder(SparseTransformerBase):
         h = h.type(x.dtype)
         h = h.replace(F.layer_norm(h.feats, h.feats.shape[-1:]))
         h = self.out_layer(h)
-        
+
         # Sample from the posterior distribution
         mean, logvar = h.feats.chunk(2, dim=-1)
         if sample_posterior:

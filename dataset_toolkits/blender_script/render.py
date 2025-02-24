@@ -10,7 +10,7 @@ import glob
 """=============== BLENDER ==============="""
 
 IMPORT_FUNCTIONS: Dict[str, Callable] = {
-    "obj": bpy.ops.import_scene.obj,
+    "obj": bpy.ops.wm.obj_import,
     "glb": bpy.ops.import_scene.gltf,
     "gltf": bpy.ops.import_scene.gltf,
     "usd": bpy.ops.import_scene.usd,
@@ -18,7 +18,7 @@ IMPORT_FUNCTIONS: Dict[str, Callable] = {
     "stl": bpy.ops.import_mesh.stl,
     "usda": bpy.ops.import_scene.usda,
     "dae": bpy.ops.wm.collada_import,
-    "ply": bpy.ops.import_mesh.ply,
+    "ply": bpy.ops.wm.ply_import,
     "abc": bpy.ops.wm.alembic_import,
     "blend": bpy.ops.wm.append,
 }
@@ -496,15 +496,16 @@ def main(arg):
     with open(os.path.join(arg.output_folder, 'transforms.json'), 'w') as f:
         json.dump(to_export, f, indent=4)
         
-    if arg.save_mesh:
-        # triangulate meshes
-        unhide_all_objects()
-        convert_to_meshes()
-        triangulate_meshes()
-        print('[INFO] Meshes triangulated.')
-        
-        # export ply mesh
-        bpy.ops.export_mesh.ply(filepath=os.path.join(arg.output_folder, 'mesh.ply'))
+    # if arg.save_mesh:
+    # triangulate meshes
+    unhide_all_objects()
+    convert_to_meshes()
+    triangulate_meshes()
+    print('[INFO] Meshes triangulated.')
+    
+    # export ply mesh
+    bpy.ops.wm.ply_export('INVOKE_DEFAULT', filepath=os.path.join(arg.output_folder, 'mesh.ply'))
+    # bpy.ops.export_mesh.ply(filepath=os.path.join(arg.output_folder, 'mesh.ply')) # ! this no longer works in blender 4
 
         
 if __name__ == '__main__':
